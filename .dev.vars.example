@@ -1,0 +1,9 @@
+# Development Environment Variables
+# Copy this file to .dev.vars and fill in your actual API keys
+# .dev.vars is gitignored and will be used for local development
+
+ETHERSCAN_API_KEY=your_etherscan_api_key_here
+ALCHEMY_API_KEY=your_alchemy_api_key_here
+COINGECKO_API_KEY=your_coingecko_api_key_here
+DEFILLAMA_API_URL=https://api.llama.fi
+BLOCKCHAIN_POLL_INTERVAL=60000
