@@ -5,8 +5,13 @@ import { DefiAgent } from './DefiAgent';
 
 const app = new Hono<{ Bindings: Env }>();
 
-// Enable CORS for frontend
-app.use('/*', cors());
+// Enable CORS for localhost (development) and GitHub Pages
+app.use('/*', cors({
+  origin: ['http://localhost:3000', 'https://maxj723.github.io'],
+  credentials: true,
+  allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowHeaders: ['Content-Type', 'X-User-Id'],
+}));
 
 // Health check
 app.get('/health', (c) => {
