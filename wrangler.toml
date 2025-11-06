@@ -1,0 +1,43 @@
+name = "defi-intelligence-agent"
+main = "src/agent/index.ts"
+compatibility_date = "2024-11-01"
+compatibility_flags = ["nodejs_compat"]
+
+# Workers AI binding for LLM
+[ai]
+binding = "AI"
+
+# Vectorize for semantic search
+[[vectorize]]
+binding = "VECTORIZE"
+index_name = "defi-agent-vectors"
+
+# Durable Objects for agent state
+[[durable_objects.bindings]]
+name = "DEFI_AGENT"
+class_name = "DefiAgent"
+script_name = "defi-intelligence-agent"
+
+# Workflows binding for long-running operations
+[[workflows]]
+binding = "WALLET_MONITOR"
+name = "wallet-monitor-workflow"
+class_name = "WalletMonitorWorkflow"
+
+# Environment variables (to be set via secrets)
+[vars]
+ETHERSCAN_API_KEY = ""
+ALCHEMY_API_KEY = ""
+COINGECKO_API_KEY = ""
+DEFILLAMA_API_URL = "https://api.llama.fi"
+BLOCKCHAIN_POLL_INTERVAL = "60000"
+
+# Database configuration
+[[d1_databases]]
+binding = "DB"
+database_name = "defi-agent-db"
+database_id = "your-database-id"
+
+# Pages configuration for UI
+[site]
+bucket = "./dist"

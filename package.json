@@ -1,0 +1,30 @@
+{
+  "name": "defi-intelligence-agent",
+  "version": "1.0.0",
+  "description": "DeFi/NFT research and trading intelligence agent on Cloudflare Agents platform",
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "test": "vitest",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@cloudflare/agents": "latest",
+    "@cloudflare/workers-types": "^4.20241127.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "hono": "^4.6.14"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "typescript": "^5.7.2",
+    "vite": "^5.4.11",
+    "@vitejs/plugin-react": "^4.3.4",
+    "vitest": "^2.1.8",
+    "wrangler": "^3.90.0"
+  }
+}
