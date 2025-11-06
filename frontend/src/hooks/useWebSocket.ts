@@ -6,7 +6,7 @@ export function useWebSocket(onMessage?: (message: WebSocketMessage) => void) {
   const ws = useRef<WebSocket | null>(null);
   const [isConnected, setIsConnected] = useState(false);
   const [reconnectAttempts, setReconnectAttempts] = useState(0);
-  const reconnectTimeoutRef = useRef<NodeJS.Timeout>();
+  const reconnectTimeoutRef = useRef<number>();
 
   const connect = () => {
     try {
@@ -38,7 +38,7 @@ export function useWebSocket(onMessage?: (message: WebSocketMessage) => void) {
 
         // Exponential backoff reconnection
         const delay = Math.min(1000 * Math.pow(2, reconnectAttempts), 30000);
-        reconnectTimeoutRef.current = setTimeout(() => {
+        reconnectTimeoutRef.current = window.setTimeout(() => {
           setReconnectAttempts((prev) => prev + 1);
           connect();
         }, delay);
@@ -50,7 +50,7 @@ export function useWebSocket(onMessage?: (message: WebSocketMessage) => void) {
 
   const disconnect = () => {
     if (reconnectTimeoutRef.current) {
-      clearTimeout(reconnectTimeoutRef.current);
+      window.clearTimeout(reconnectTimeoutRef.current);
     }
     ws.current?.close();
     ws.current = null;
