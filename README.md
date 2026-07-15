@@ -9,18 +9,6 @@
 ![Node](https://img.shields.io/badge/Node.js-18%2B-green)
 ![Platform](https://img.shields.io/badge/Platform-Cloudflare%20Workers-orange)
 
-## 🎯 What Makes This Unique?
-
-Unlike traditional crypto tools, this project combines:
-- **AI-Powered Analysis**: Llama 3.3 70B with 20 specialized tools for natural language queries
-- **Hybrid Architecture**: Shared frontend (GitHub Pages) + local backend (your machine) = zero deployment
-- **Complete Privacy**: Your API keys and data never leave your computer
-- **Real-Time Monitoring**: Cloudflare Workflows enable continuous wallet tracking with WebSocket alerts
-- **Production-Ready**: Built on enterprise-grade Cloudflare infrastructure (Durable Objects, D1, Workers AI)
-- **5-Minute Setup**: `git clone` → add API keys → `npm run dev` → you're analyzing DeFi projects
-
-**Perfect for**: Crypto traders, researchers, developers, and anyone who wants AI-powered blockchain intelligence without sacrificing privacy or paying for infrastructure.
-
 ## 📑 Table of Contents
 
 - [Features](#-features)
@@ -79,7 +67,7 @@ Add them to your `.dev.vars` file - they never leave your machine!
 
 ### Step 1: Prerequisites
 
-Before you begin, make sure you have:
+Before you begin, confirm you meet the system requirements:
 - **Node.js 18+** installed ([nodejs.org](https://nodejs.org/))
 - **Git** installed ([git-scm.com](https://git-scm.com/))
 - A terminal/command prompt
@@ -302,6 +290,25 @@ npm run dev
 
 The frontend updates automatically since it's hosted on GitHub Pages!
 
+### Optional: Deploy Backend 24/7
+
+Advanced users can optionally deploy their backend to Cloudflare Workers for 24/7 monitoring:
+
+```bash
+# Create resources
+wrangler d1 create defi-agent-db
+wrangler vectorize create defi-agent-vectors --dimensions=768
+
+# Set secrets
+wrangler secret put ETHERSCAN_API_KEY
+wrangler secret put COINGECKO_API_KEY
+
+# Deploy
+npm run deploy
+```
+
+Then update the backend URL in the frontend settings to your Workers URL. Cost: ~$5/month for always-on monitoring.
+
 ## 💻 System Requirements
 
 - **Node.js**: Version 18 or higher
@@ -331,110 +338,6 @@ Find opportunities with AI:
 "Find profitable DeFi traders on Ethereum this month"
 ```
 Agent searches and ranks wallets by performance.
-
-## 🏗️ Architecture
-
-### Hybrid Local/Cloud Architecture
-
-This project uses a unique **hybrid architecture** that combines the best of both worlds:
-
-```
-┌─────────────────────────────────────────────────┐
-│   GitHub Pages (Shared Frontend)               │
-│   https://maxj723.github.io/defi-research-agent │
-│   - React 18 + TypeScript                      │
-│   - Tailwind CSS + Vite                        │
-│   - Always up-to-date                          │
-│   - Zero deployment needed by users            │
-└──────────────────┬──────────────────────────────┘
-                   │
-                   │ WebSocket + REST API
-                   │ (CORS configured)
-                   │
-┌──────────────────▼──────────────────────────────┐
-│   Local Backend (Cloudflare Workers Dev)       │
-│   http://localhost:8787                         │
-│   ┌─────────────────────────────────────────┐  │
-│   │ AI Agent (Llama 3.3)                    │  │
-│   │ - 20 specialized tools                  │  │
-│   │ - Natural language processing           │  │
-│   └─────────────────────────────────────────┘  │
-│   ┌─────────────────────────────────────────┐  │
-│   │ Durable Objects                         │  │
-│   │ - Stateful WebSocket sessions           │  │
-│   │ - Real-time alerts                      │  │
-│   └─────────────────────────────────────────┘  │
-│   ┌─────────────────────────────────────────┐  │
-│   │ Workflows                               │  │
-│   │ - Wallet monitoring (continuous)        │  │
-│   │ - Transaction analysis                  │  │
-│   └─────────────────────────────────────────┘  │
-│   ┌─────────────────────────────────────────┐  │
-│   │ D1 Database                             │  │
-│   │ - 8 tables + indexes                    │  │
-│   │ - Watched wallets, alerts, projects     │  │
-│   └─────────────────────────────────────────┘  │
-│   ┌─────────────────────────────────────────┐  │
-│   │ Your API Keys (.dev.vars)               │  │
-│   │ - ETHERSCAN_API_KEY                     │  │
-│   │ - COINGECKO_API_KEY                     │  │
-│   │ - ALCHEMY_API_KEY                       │  │
-│   │ ✅ NEVER leaves your machine            │  │
-│   └─────────────────────────────────────────┘  │
-└──────────────────┬──────────────────────────────┘
-                   │
-                   │ External API calls
-                   │ (using your local keys)
-                   │
-┌──────────────────▼──────────────────────────────┐
-│   Blockchain APIs & Data Sources               │
-│   - Etherscan (transaction data)               │
-│   - CoinGecko (price feeds)                    │
-│   - Alchemy (advanced queries)                 │
-│   - DefiLlama (protocol data)                  │
-└─────────────────────────────────────────────────┘
-```
-
-### Why This Architecture?
-
-**Traditional approach (what we DIDN'T do):**
-- Each user deploys their own frontend + backend to Cloudflare
-- Requires: GitHub account, Cloudflare account, secrets management, D1 setup
-- Complex deployment, per-user support needed
-
-**Our hybrid approach (what we DID):**
-- **ONE shared frontend** on GitHub Pages (always up-to-date)
-- **Each user runs backend locally** with their own API keys
-- Simple: `npm install` → `npm run dev` → open browser
-- API keys stay secure on user's machine
-- Free for all users, no deployment needed
-
-**Key Benefits:**
-- ✅ **5-minute setup** - Clone, add keys, run
-- ✅ **One shared, always-updated frontend** - No per-user deployment
-- ✅ **Complete privacy** - Your backend runs locally with your API keys
-- ✅ **No infrastructure costs** - Free for all users
-- ✅ **Easy updates** - Frontend updates automatically, backend via `git pull`
-- ✅ **Full Cloudflare Workers features** - Durable Objects, Workflows, D1, Workers AI
-
-### Optional: Deploy Backend 24/7
-
-Advanced users can optionally deploy their backend to Cloudflare Workers for 24/7 monitoring:
-
-```bash
-# Create resources
-wrangler d1 create defi-agent-db
-wrangler vectorize create defi-agent-vectors --dimensions=768
-
-# Set secrets
-wrangler secret put ETHERSCAN_API_KEY
-wrangler secret put COINGECKO_API_KEY
-
-# Deploy
-npm run deploy
-```
-
-Then update the backend URL in the frontend settings to your Workers URL. Cost: ~$5/month for always-on monitoring.
 
 ## 🎨 Screenshots
 
